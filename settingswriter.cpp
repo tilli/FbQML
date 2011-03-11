@@ -1,4 +1,5 @@
 #include "settingswriter.h"
+#include <QDebug>
 
 SettingsWriter::SettingsWriter(QObject *parent) :
     QObject(parent), mSettings("Symbio", "QmlPluginExample")
@@ -24,7 +25,7 @@ void SettingsWriter::setValue(const QString &value)
 {
     if (value != mValue) {
         mValue = value;
-        qDebug(qPrintable("Value changed: " + mValue));
+        qDebug() << "Value changed: " << mValue;
         emit valueChanged(mValue);
         if (!mName.isEmpty()) {
             if (mValue.isEmpty()) {
