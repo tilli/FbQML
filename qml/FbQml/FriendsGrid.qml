@@ -3,7 +3,6 @@ import QtQuick 1.0
 Rectangle {
 
     property alias model: friendsView.model
-    signal selected(string selectedId)
 
     id: friendsList
     color: "white"
@@ -29,10 +28,6 @@ Rectangle {
                 // accessToken is inherited from main.qml
                 source: accessToken ? "https://graph.facebook.com/" + model.id + "/picture?" + accessToken : "nopic.gif"
                 fillMode: Image.PreserveAspectFit
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: selected(model.id)
-                }
             }
         }
     }

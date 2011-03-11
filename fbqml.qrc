@@ -9,5 +9,6 @@
         <file>qml/FbQml/main.qml</file>
         <file>qml/FbQml/MyBar.qml</file>
         <file>qml/FbQml/nopic.gif</file>
+        <file>qml/FbQml/FriendDelegate.qml</file>
     </qresource>
 </RCC>

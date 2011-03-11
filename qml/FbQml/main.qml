@@ -24,9 +24,8 @@ Rectangle {
     // the buddy model source URI is updated and it fetches
     // the buddy list from there
     onAccessTokenChanged: {
-        friendsModel.clear();
-        accessToken = token;
         if (accessToken) {
+            friendsModel.clear();
             // Fetches the friends list after login has completed
             // and access token received from FB.
             // The query is JsonPath from http://goessner.net/articles/JsonPath/
@@ -36,8 +35,6 @@ Rectangle {
                                  element.statusMessage = "";
                                  friendsModel.append(element);
                              });
-        } else {
-            loadRandomData();
         }
     }
 
@@ -74,7 +71,6 @@ Rectangle {
     FriendsList {
         id: friendsList
         model: friendsModel
-        onSelected: console.log("Friend selected: " + selectedId)
         anchors.top: myBar.bottom
         anchors.left: parent.left
         anchors.right: parent.right
@@ -87,7 +83,6 @@ Rectangle {
     FriendsGrid {
         id: friendsGrid
         model: friendsModel
-        onSelected: console.log("Friend selected: " + selectedId)
         anchors.top: myBar.bottom
         anchors.left: parent.left
         anchors.right: parent.right
@@ -105,6 +100,7 @@ Rectangle {
 
         onClearTokenClicked: {
             accessToken = "";
+            friendsModel.clear();
             login.startLogin();
         }
 
@@ -124,7 +120,8 @@ Rectangle {
     onSettingsLoadedChanged: {
         if (!accessToken) {
             console.log("Auth token not found from storage");
-            login.startLogin();
+//            login.startLogin();
+            loadRandomData();
         } else {
             console.log("Auth token loaded from storage: " + accessToken);
         }
@@ -136,7 +133,12 @@ Rectangle {
     FacebookLogin {
         id: login
         z: 1
-        onFinished: accessToken = token;
+        onFinished: {
+            accessToken = token;
+            if (!token) {
+                loadRandomData();
+            }
+        }
     }
 
 }
