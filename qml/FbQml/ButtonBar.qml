@@ -9,7 +9,7 @@ Rectangle {
         anchors.right: viewButton.left
         anchors.rightMargin: 10
         anchors.verticalCenter: parent.verticalCenter
-        text: "Clear token"
+        text: "Login"
         onClicked: buttonBar.clearTokenClicked()
     }
     Button {

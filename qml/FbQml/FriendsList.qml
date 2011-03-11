@@ -1,5 +1,5 @@
 import QtQuick 1.0
-import "JSonModelLoader.js" as Loader
+import "JsonModelLoader.js" as Loader
 
 Rectangle {
 
@@ -149,7 +149,7 @@ Rectangle {
                 },
                 Transition {
                     from: "detached"; to: ""
-                    ParentAnimation { SmoothedAnimation { properties: "x,y"; velocity: 600 } }
+                    ParentAnimation { SmoothedAnimation { properties: "x,y"; duration: 500 } }
                     AnchorAnimation { duration: 200 }
                     NumberAnimation { property: "opacity"; duration: 200 }
                 }

@@ -34,3 +34,6 @@ qtcAddDeployment()
 
 HEADERS += \
     settingswriter.h
+
+RESOURCES += \
+    fbqml.qrc

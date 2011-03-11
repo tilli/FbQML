@@ -13,6 +13,7 @@ Rectangle {
     SettingsWriter {
         id: accessTokenStorage
         name: "AccessToken"
+        value: rootRect.accessToken
         Component.onCompleted: {
             rootRect.accessToken = value
             rootRect.settingsLoaded = true;
@@ -23,20 +24,20 @@ Rectangle {
     // the buddy model source URI is updated and it fetches
     // the buddy list from there
     onAccessTokenChanged: {
-        if (accessToken != "") {
-            login.opacity = 0;
-            accessTokenStorage.value = accessToken
-            myBar.accessToken = accessToken;
-
+        friendsModel.clear();
+        accessToken = token;
+        if (accessToken) {
             // Fetches the friends list after login has completed
             // and access token received from FB.
             // The query is JsonPath from http://goessner.net/articles/JsonPath/
             // Facebook API from http://developers.facebook.com/docs/api
-            Loader.loadModel("https://graph.facebook.com/me/friends?" + accessToken,
-                             "/data", function(element) {
+            Loader.loadModel("https://graph.facebook.com/me/friends?" + accessToken, "/data",
+                             function(element) {
                                  element.statusMessage = "";
                                  friendsModel.append(element);
                              });
+        } else {
+            loadRandomData();
         }
     }
 
@@ -57,6 +58,7 @@ Rectangle {
 
     MyBar {
         id: myBar
+        accessToken: rootRect.accessToken
         onMessageChanged: console.log("Submitted: " + message)
         anchors.right: parent.right
         anchors.left: parent.left
@@ -100,12 +102,12 @@ Rectangle {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         height: 40
+
         onClearTokenClicked: {
-            accessTokenStorage.value = ""
             accessToken = "";
-            friendsModel.clear();
-            login.start();
+            login.startLogin();
         }
+
         onSwitchViewClicked: {
             if (rootRect.state == "") {
                 rootRect.state = "grid";
@@ -120,11 +122,11 @@ Rectangle {
     }
 
     onSettingsLoadedChanged: {
-        if (accessToken == "") {
+        if (!accessToken) {
             console.log("Auth token not found from storage");
-            login.start();
+            login.startLogin();
         } else {
-            console.log("Auth token loaded from storage");
+            console.log("Auth token loaded from storage: " + accessToken);
         }
     }
 
@@ -134,15 +136,7 @@ Rectangle {
     FacebookLogin {
         id: login
         z: 1
-        onFinished: {
-            if (!token || token == "") {
-                loadRandomData();
-                opacity = 0;
-            } else {
-                rootRect.accessToken = token;
-            }
-        }
-        Behavior on opacity { NumberAnimation {} }
+        onFinished: accessToken = token;
     }
 
 }

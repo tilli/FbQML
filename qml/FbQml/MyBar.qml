@@ -14,7 +14,7 @@ Rectangle {
     radius: 5
 
     // When FB log-in is complete, updates own picture
-    onAccessTokenChanged: myPic.source = "https://graph.facebook.com/me/picture?" + accessToken
+    onAccessTokenChanged: accessToken ? myPic.source = "https://graph.facebook.com/me/picture?" + accessToken : myPic.source = ""
 
     Image {
         id: myPic

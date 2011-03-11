@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/FbQml/Button.qml</file>
+        <file>qml/FbQml/ButtonBar.qml</file>
+        <file>qml/FbQml/FacebookLogin.qml</file>
+        <file>qml/FbQml/FriendsGrid.qml</file>
+        <file>qml/FbQml/FriendsList.qml</file>
+        <file>qml/FbQml/JsonModelLoader.js</file>
+        <file>qml/FbQml/main.qml</file>
+        <file>qml/FbQml/MyBar.qml</file>
+        <file>qml/FbQml/nopic.gif</file>
+    </qresource>
+</RCC>
