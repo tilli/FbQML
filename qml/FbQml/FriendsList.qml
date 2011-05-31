@@ -12,9 +12,6 @@ Rectangle {
     anchors.margins: 3
     radius: 5
 
-    // Prevent list elements from being drawn outside
-    clip: true
-
     // Displays FB friends in list
     ListView {
         id: friendsView
@@ -23,6 +20,9 @@ Rectangle {
         model: friendsModel
         delegate: FriendDelegate {}
         spacing: 3
+
+        // Prevent list elements from being drawn outside
+        clip: true
     }
 
     // Invisible item for list detach
